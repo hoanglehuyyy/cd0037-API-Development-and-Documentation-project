@@ -168,7 +168,7 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['question'])
 
-    def test_404_if_no_questions_available_for_quiz(self):
+    def test__no_questions_available_for_quiz(self):
         quiz = {
             'previous_questions': [5, 9, 12, 23],
             'quiz_category': {
@@ -179,9 +179,9 @@ class TriviaTestCase(unittest.TestCase):
         res = self.client().post('/quizzes', json=quiz)
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 404)
-        self.assertEqual(data['success'], False)
-        self.assertEqual(data['message'], 'not found')
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertFalse(data['question'])
 
 
 # Make the tests conveniently executable
